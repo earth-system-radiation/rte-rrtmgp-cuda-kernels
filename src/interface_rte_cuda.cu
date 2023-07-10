@@ -91,6 +91,8 @@ extern "C"
                     *has_dif_bc, acc_to_cuda(inc_flux_dif),
                     *do_broadband, acc_to_cuda(flux_up_loc), acc_to_cuda(flux_dn_loc), acc_to_cuda(flux_dir_loc));
         }
+
+        cuda_safe_call(cudaStreamSynchronize(0));
     }
 
     // void lw_solver_noscat_gaussquad(
@@ -208,6 +210,7 @@ extern "C"
         }
 
         Tools_gpu::free_gpu(weights_gpu);
+        cuda_safe_call(cudaStreamSynchronize(0));
     }
 
 
@@ -232,6 +235,8 @@ extern "C"
         Optical_props_kernels_cuda::increment_1scalar_by_1scalar(
                 *ncol, *nlay, *ngpt,
                 acc_to_cuda(tau_inout), acc_to_cuda(tau_in));
+
+        cuda_safe_call(cudaStreamSynchronize(0));
     }
 
 
@@ -272,6 +277,8 @@ extern "C"
                 *ncol, *nlay, *ngpt,
                 acc_to_cuda(tau_inout), acc_to_cuda(ssa_inout), acc_to_cuda(g_inout),
                 acc_to_cuda(tau_in), acc_to_cuda(ssa_in), acc_to_cuda(g_in));
+
+        cuda_safe_call(cudaStreamSynchronize(0));
     }
 
 
@@ -322,6 +329,8 @@ extern "C"
                 *ncol, *nlay, *ngpt,
                 acc_to_cuda(tau_inout), acc_to_cuda(tau_in),
                 *nbnd, acc_to_cuda(band_lims_gpoint));
+
+        cuda_safe_call(cudaStreamSynchronize(0));
     }
 
 
@@ -366,6 +375,8 @@ extern "C"
                 acc_to_cuda(tau_inout), acc_to_cuda(ssa_inout), acc_to_cuda(g_inout),
                 acc_to_cuda(tau_in), acc_to_cuda(ssa_in), acc_to_cuda(g_in),
                 *nbnd, acc_to_cuda(band_lims_gpoint));
+
+        cuda_safe_call(cudaStreamSynchronize(0));
     }
 
 
@@ -418,6 +429,8 @@ extern "C"
         Optical_props_kernels_cuda::delta_scale_2str_k(
             *ncol, *nlay, *ngpt,
             acc_to_cuda(tau_inout), acc_to_cuda(ssa_inout), acc_to_cuda(g_inout));
+
+        cuda_safe_call(cudaStreamSynchronize(0));
     }
 
 
@@ -466,6 +479,8 @@ extern "C"
         dim3 grid_gpu(grid_ncells);
 
         subset_kernel<<<grid_gpu, block_gpu>>>(array_out, array_in, subset_data, ncells);
+
+        cuda_safe_call(cudaStreamSynchronize(0));
     }
 
 
@@ -491,6 +506,8 @@ extern "C"
         Fluxes_kernels_cuda::sum_broadband(
                 *ncol, *nlev, *ngpt,
                 acc_to_cuda(gpt_flux), acc_to_cuda(flux));
+
+        cuda_safe_call(cudaStreamSynchronize(0));
     }
 
     void rte_net_broadband_full(
@@ -512,6 +529,8 @@ extern "C"
                 *ncol, *nlev,
                 acc_to_cuda(broadband_flux_dn), acc_to_cuda(broadband_flux_up),
                 acc_to_cuda(broadband_flux_net));
+
+        cuda_safe_call(cudaStreamSynchronize(0));
     }
 
 
