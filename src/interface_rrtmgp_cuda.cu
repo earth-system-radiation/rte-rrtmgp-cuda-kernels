@@ -170,16 +170,15 @@ extern "C"
             int* gpoint_bands,
             int* band_lims_gpt,
             Float* pfracin,
-            Float* temp_ref_min, Float* totplnk_delta,
+            Float* temp_ref_min,
+            Float* totplnk_delta,
             Float* totplnk,
             int* gpoint_flavor,
             Float* sfc_src,
             Float* lay_src,
-            Float* lev_src_inc,
-            Float* lev_src_dec,
+            Float* lev_src,
             Float* sfc_src_jac)
     {
-        // printf("CvH: compute_planck_source CUDA\n");
         Gas_optics_rrtmgp_kernels_cuda::compute_planck_source(
                 *ncol, *nlay, *nbnd, *ngpt,
                 *nflav, *neta, *npres, *ntemp,
@@ -201,8 +200,7 @@ extern "C"
                 acc_to_cuda(gpoint_flavor),
                 acc_to_cuda(sfc_src),
                 acc_to_cuda(lay_src),
-                acc_to_cuda(lev_src_inc),
-                acc_to_cuda(lev_src_dec),
+                acc_to_cuda(lev_src),
                 acc_to_cuda(sfc_src_jac));
 
         cuda_safe_call(cudaStreamSynchronize(0));
