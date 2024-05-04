@@ -241,7 +241,7 @@ void Planck_source_kernel(
     const Index_2d<const int> jpress        (jpress_ptr, ncol, nlay);
     const Index_1d<const int> gpoint_bands  (gpoint_bands_ptr, ngpt);
     const Index_2d<const int> band_lims_gpt (band_lims_gpt_ptr, 2, nbnd);
-    const Index_4d<const Float> pfracin     (pfracin_ptr, ntemp, neta, npres+1, ngpt); 
+    const Index_4d<const Float> pfracin     (pfracin_ptr, ntemp, neta, npres+1, ngpt);
     const Index_2d<const Float> totplnk     (totplnk_ptr, nPlanckTemp, nbnd);
     const Index_2d<const int> gpoint_flavor (gpoint_flavor_ptr, 2, ngpt);
 

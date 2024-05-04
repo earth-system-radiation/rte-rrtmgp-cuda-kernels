@@ -36,7 +36,6 @@ extern "C"
             int* jeta,
             int* jpress)
     {
-        // printf("CvH: interpolation CUDA\n");
         Gas_optics_rrtmgp_kernels_cuda::interpolation(
                 *ncol, *nlay,
                 *ngas, *nflav, *neta, *npres, *ntemp,
@@ -92,7 +91,6 @@ extern "C"
             int* jeta, int* jtemp,
             int* jpress, Float* tau)
     {
-        // printf("CvH: compute_tau_absorption CUDA\n");
         Gas_optics_rrtmgp_kernels_cuda::compute_tau_absorption(
                 *ncol, *nlay, *nband, *ngpt,
                 *ngas, *nflav, *neta, *npres, *ntemp,
@@ -138,7 +136,6 @@ extern "C"
             Bool* tropo, int* jtemp,
             Float* tau_rayleigh)
     {
-        // printf("CvH: compute_tau_rayleigh CUDA\n");
         Gas_optics_rrtmgp_kernels_cuda::compute_tau_rayleigh(
                 *ncol, *nlay, *nband, *ngpt,
                 *ngas, *nflav, *neta, *npres, *ntemp,
@@ -179,6 +176,8 @@ extern "C"
             Float* lev_src,
             Float* sfc_src_jac)
     {
+        #pragma acc data copyin(gpoint_bands[0:(*ngpt)], tlay[0:(*ncol)*(*nlay)])
+        {
         Gas_optics_rrtmgp_kernels_cuda::compute_planck_source(
                 *ncol, *nlay, *nbnd, *ngpt,
                 *nflav, *neta, *npres, *ntemp,
@@ -193,6 +192,7 @@ extern "C"
                 acc_to_cuda(jtemp),
                 acc_to_cuda(jpress),
                 acc_to_cuda(gpoint_bands),
+                // gpoint_bands_tmp,
                 acc_to_cuda(band_lims_gpt),
                 acc_to_cuda(pfracin),
                 *temp_ref_min, *totplnk_delta,
@@ -204,6 +204,7 @@ extern "C"
                 acc_to_cuda(sfc_src_jac));
 
         cuda_safe_call(cudaStreamSynchronize(0));
+        }
     }
 
     void zero_array_1D(int* ni, Float* array)
