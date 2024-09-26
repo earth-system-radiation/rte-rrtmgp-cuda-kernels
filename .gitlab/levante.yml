@@ -1,0 +1,65 @@
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "trigger"
+
+include:
+  - project: 'anw_dienste/ci-templates'
+    file: '.slurm-ci.yml'
+  - local: '.gitlab/common.yml'
+
+variables:
+  SCHEDULER_PARAMETERS: >-
+    --account=mh0287
+    --time=05:00
+    ${EXTRA_SCHEDULER_PARAMETERS}
+  EXTRA_SCHEDULER_PARAMETERS:
+
+.gpu:
+  extends: .default
+  variables:
+    EXTRA_SCHEDULER_PARAMETERS: >-
+      --partition=gpu
+      --gpus=1
+
+.nvhpc:
+  variables:
+    # Core variables:
+    FC: /sw/spack-levante/nvhpc-22.5-v4oky3/Linux_x86_64/22.5/compilers/bin/nvfortran
+    # Convenience variables:
+    VERSION_FCFLAGS: --version
+    NFHOME: /sw/spack-levante/netcdf-fortran-4.5.4-syv4qr
+    NCHOME: /sw/spack-levante/netcdf-c-4.9.0-gc7kgj
+
+.common-levante:
+  extends: .common
+  variables:
+    PYHOME: /sw/spack-levante/mambaforge-22.9.0-2-Linux-x86_64-kptncg
+    # Suppress an irrelevant but annoying error message:
+    PROJ_LIB: ${PYHOME}/share/proj
+    # Make variables:
+    FCINCLUDE: -I${NFHOME}/include
+    LDFLAGS: -L${NFHOME}/lib -L${NCHOME}/lib
+  before_script:
+    - module purge
+    - module load git
+    # Extend the existing environment variables:
+    - export PATH="${PYHOME}/bin:${PATH}"
+    - export LD_LIBRARY_PATH="${NFHOME}/lib:${NCHOME}/lib:${LD_LIBRARY_PATH-}"
+    # Some tests require a large stack:
+    - ulimit -s unlimited
+
+.nvhpc-gpu-openacc:
+  extends:
+    - .gpu
+    - .nvhpc
+    - .common-levante
+  variables:
+    # Compiler flags used for ICON model:
+    FCFLAGS: -g -O2 -Mrecursive -Mallocatable=03 -Mstack_arrays -Minfo=accel,inline -acc=gpu,verystrict -gpu=cc80,cuda11.7 -DRTE_USE_${FPMODEL}
+    RTE_KERNELS: accel
+
+nvhpc-gpu-cuda-DP: 
+  extends:
+    - .dp
+    - .nvhpc-gpu-openacc
+    
