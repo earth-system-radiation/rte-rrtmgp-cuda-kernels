@@ -25,6 +25,7 @@ variables:
   variables:
     # Core variables:
     FC: /sw/spack-levante/nvhpc-22.5-v4oky3/Linux_x86_64/22.5/compilers/bin/nvfortran
+    CPPC: /sw/spack-levante/nvhpc-22.5-v4oky3/Linux_x86_64/22.5/compilers/bin/nvc++
     # Convenience variables:
     VERSION_FCFLAGS: --version
     NFHOME: /sw/spack-levante/netcdf-fortran-4.5.4-syv4qr
@@ -62,4 +63,3 @@ nvhpc-gpu-cuda-DP:
   extends:
     - .dp
     - .nvhpc-gpu-openacc
-    

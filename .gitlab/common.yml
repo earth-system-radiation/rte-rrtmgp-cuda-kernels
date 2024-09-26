@@ -21,4 +21,4 @@
     #
     # Build libraries
     #
-    - make -C build
+    - make libs
