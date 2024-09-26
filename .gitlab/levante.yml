@@ -24,8 +24,8 @@ variables:
 .nvhpc:
   variables:
     # Core variables:
-    FC: /sw/spack-levante/nvhpc-22.5-v4oky3/Linux_x86_64/22.5/compilers/bin/nvfortran
-    CXX: /sw/spack-levante/nvhpc-22.5-v4oky3/Linux_x86_64/22.5/compilers/bin/nvc++
+    FC: nvfortran
+    CXX: nvc++
     # Convenience variables:
     VERSION_FCFLAGS: --version
     NFHOME: /sw/spack-levante/netcdf-fortran-4.5.4-syv4qr
@@ -43,6 +43,7 @@ variables:
   before_script:
     - module purge
     - module load git
+    - module load nvhpc/22.5-gcc-11.2.0
     # Extend the existing environment variables:
     - export PATH="${PYHOME}/bin:${PATH}"
     - export LD_LIBRARY_PATH="${NFHOME}/lib:${NCHOME}/lib:${LD_LIBRARY_PATH-}"
