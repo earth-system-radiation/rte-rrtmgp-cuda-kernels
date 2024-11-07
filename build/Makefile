@@ -10,7 +10,7 @@ COMPILE = $(FC) $(FCFLAGS) $(FCINCLUDE) -c
 %.o: %.F90
 	$(COMPILE) $<
 
-COMPILE_CU = $(CXX) -c -std=c++17 -O3 -gopt -DRTE_RRTMGP_GPU_MEMPOOL_CUDA -acc -cuda
+COMPILE_CU = $(CUDACXX) -c -std=c++17 -O3 -gopt -DRTE_RRTMGP_GPU_MEMPOOL_CUDA -acc -cuda
 
 %.o: %.cu
 	$(COMPILE_CU) $<
