@@ -43,6 +43,7 @@ variables:
   before_script:
     - module purge
     - module load git
+    - module load gcc/11.2.0-gcc-11.2.0 
     - module load nvhpc/22.5-gcc-11.2.0
     # Extend the existing environment variables:
     - export PATH="${PYHOME}/bin:${PATH}"
