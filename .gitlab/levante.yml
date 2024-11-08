@@ -26,6 +26,8 @@ variables:
     # Core variables:
     FC: nvfortran
     CUDACXX: nvcc
+    # Flags used in building Icon 
+    CUDAFLAGS: -arch=sm_80 -g -O3 -expt-relaxed-constexpr -DNDEBUG
     # Convenience variables:
     VERSION_FCFLAGS: --version
     NFHOME: /sw/spack-levante/netcdf-fortran-4.5.4-syv4qr
