@@ -55,3 +55,8 @@ nvhpc-gpu-cuda-DP:
   extends:
     - .dp
     - .nvhpc-gpu-openacc
+
+nvhpc-gpu-cuda-SP: 
+  extends:
+    - .sp
+    - .nvhpc-gpu-openacc

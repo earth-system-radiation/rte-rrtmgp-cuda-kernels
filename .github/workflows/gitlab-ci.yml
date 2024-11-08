@@ -68,6 +68,7 @@ jobs:
       matrix:
         config-name:
           - nvhpc-gpu-cuda-DP
+          - nvhpc-gpu-cuda-SP
     steps:
     #
     # Build, run and check (fetch the log)
