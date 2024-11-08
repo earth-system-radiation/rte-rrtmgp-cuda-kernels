@@ -3,10 +3,7 @@ on:
   push:
     branches:
     - main
-    - feature-add-ci
   pull_request:
-    branches-ignore:
-    - documentation
   workflow_dispatch:
 
 defaults:
