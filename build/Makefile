@@ -1,7 +1,7 @@
 #!/usr/bin/env make
 all:           librtecudakernels.a librrtmgpcudakernels.a
 
-CUDAFLAGS ?= "-O3 -gopt -DRTE_RRTMGP_GPU_MEMPOOL_CUDA -acc -cuda"
+CUDAFLAGS ?= "-Xptxas -O3 -DNDEBUG -DRTE_RRTMGP_GPU_MEMPOOL_CUDA"
 COMPILE_CU = $(CUDACXX) -c $(CUDAFLAGS)
 
 
