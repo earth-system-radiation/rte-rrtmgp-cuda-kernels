@@ -1,16 +1,9 @@
 #!/usr/bin/env make
-
-#
-# Compiler variables FC, FCFLAGS must be set in the environment
-#
-# Make all the libraries though we'll only use the interface + kernels
 all:           librtecudakernels.a librrtmgpcudakernels.a
 
-COMPILE = $(FC) $(FCFLAGS) $(FCINCLUDE) -c
-%.o: %.F90
-	$(COMPILE) $<
+CUDAFLAGS ?= "-Xptxas -O3 -DNDEBUG -DRTE_RRTMGP_GPU_MEMPOOL_CUDA"
+COMPILE_CU = $(CUDACXX) -c $(CUDAFLAGS)
 
-COMPILE_CU = $(CPPC) -c -std=c++17 -O3 -gopt -DRTE_RRTMGP_GPU_MEMPOOL_CUDA -acc -cuda
 
 %.o: %.cu
 	$(COMPILE_CU) $<

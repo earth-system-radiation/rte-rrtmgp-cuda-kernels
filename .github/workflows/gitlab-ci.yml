@@ -3,10 +3,7 @@ on:
   push:
     branches:
     - main
-    - feature-add-ci
   pull_request:
-    branches-ignore:
-    - documentation
   workflow_dispatch:
 
 defaults:
@@ -68,6 +65,7 @@ jobs:
       matrix:
         config-name:
           - nvhpc-gpu-cuda-DP
+          - nvhpc-gpu-cuda-SP
     steps:
     #
     # Build, run and check (fetch the log)

@@ -21,4 +21,5 @@
     #
     # Build libraries
     #
+    - git branch
     - make libs
